@@ -1,3 +1,3 @@
 # hack-game-wanderers-io
 
-## Dùng Puppeteer để spam game Wanderers.io.
+Dùng Puppeteer để spam game Wanderers.io.
