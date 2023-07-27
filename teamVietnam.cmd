@@ -1,0 +1,1 @@
+ls2 F:/js/hack-game-wanderers-io/puppeteer.ls VIETNAM
