@@ -1,16 +1,16 @@
 {
-   "version": "2.0.0",
-   "tasks": [
-      {
-         "label": "build",
-         "type": "shell",
-         "command": "ls2 ./browser.ls",
-         "presentation": {
-            "clear": true,
-            "showReuseMessage": false,
-            "reveal": "silent",
-            "revealProblems": "onProblem"
-         }
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "ls2 ./browser.ls",
+      "presentation": {
+        "clear": true,
+        "showReuseMessage": false,
+        "reveal": "always",
+        "revealProblems": "onProblem"
       }
-   ]
+    }
+  ]
 }

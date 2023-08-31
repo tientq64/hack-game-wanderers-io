@@ -7,6 +7,7 @@ browser = await puppeteer.launch do
   headless: no
   executablePath: "F:/chromium/chrome.exe"
   defaultViewport: null
+  userDataDir: "F:/puppeteer-user-data-dir"
   args:
     "--window-size=800,600"
     "--window-position=460,140"

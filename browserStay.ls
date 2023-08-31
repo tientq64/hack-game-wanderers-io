@@ -49,12 +49,29 @@ await Promise.all Array.from (Array browserNum), (, i) !~>
       await page.click ".modePicker > .ui-tabs > :nth-child(2)"
       await page.waitForFunction do
         ~>
-          document.querySelector \.tribeName .value = "FARMER"
-          document.querySelector \.groupName .value = "FARMER"
+          document.querySelector \.tribeName .value = "KILLER"
+          document.querySelector \.groupName .value = "KILLER"
           yes
       await page.click ".start"
+      await page.waitForFunction "CLIENT.Game.player"
       setLog i, j
-      await page.waitForTimeout 2000
+      await page.evaluate !~>
+        {Game} = CLIENT
+        # Game.camera.setFollow Game.player
+        # Game.music.channel.volume 0
+        # for i til 8
+        #   Game.send \drop,
+        #     key: \wood
+        # for i til 8
+        #   Game.send \drop,
+        #     key: \food
+        # for i til 8
+        #   Game.send \drop,
+        #     key: \gold
+        for member in Game.player.members
+          Game.send \stay,
+            target: member.sid
+      await page.waitForTimeout 1000
 
     catch
       setLog i, j, e.message
