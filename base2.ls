@@ -1,6 +1,6 @@
 require! {
    "puppeteer-core": puppeteer
-   "chalk"
+   chalk
 }
 
 browserNum = 4
@@ -68,30 +68,77 @@ await Promise.all Array.from (Array browserNum), (, i) !~>
       catch
          setLog i,, "Goto timeout"
 
-   for j til 100
+   len = 100
+   for j til len
       try
          await page.click ".showMainMenu"
          await page.click ".modePicker > .ui-tabs > :nth-child(2)"
          await page.waitForFunction ~>
-            document.querySelector \.tribeName .value = "Vietnam"
-            document.querySelector \.groupName .value = "123"
-            CLIENT.Game.server_url = \s14421783116
+            # name = Math.random!toString 36 .replace \. ""
+            name = "BUILDER"
+            document.querySelector \.tribeName .value = name
+            document.querySelector \.groupName .value = ""
+            CLIENT.Game.server_url = \s14523994187
             yes
          await page.click ".start"
          await page.waitForFunction "CLIENT.Game.player"
          setLog i, j
+         await page.evaluate (i, j) !~>
+            {Game} = CLIENT
+            Game.camera.setFollow Game.player
+            wait = (ms) ~>
+               new Promise (resolve) !~>
+                  setTimeout resolve, ms
+            getDistanceXYToPlayer = (x, y) ~>
+               Math.hypot Game.player.x - x, Game.player.y - y
+            moveToXY = (x, y) !~>
+               distance = getDistanceXYToPlayer x, y
+               Game.send \move {x, y}
+               await wait distance * 15
+            king = Game.entities.groups.tribes.find (.shared.name == \Hotandsour)
+            # if !king
+            #    return
+            # if king.team != Game.player.team
+            #    for member in Game.player.members
+            #       Game.send \stay,
+            #          target: member.sid
+            #    return
+            # await moveToXY king.x, king.y
+            {x, y} = king
+            # if Game.player.team != 0
+            #    for member in Game.player.members
+            #       Game.send \stay,
+            #          target: member.sid
+            #    return
+            # x = 624
+            # y = 666
+            rx = Math.round x + Utils.random -500 500
+            ry = Math.round y + Utils.random -500 500
+            # await moveToXY mx, my
+            n = 100
+            while Game.playerData.resources.wood >= 2 and !Game.player._remove and n
+               Game.send \buildAnywhere,
+                  x: rx
+                  y: ry
+                  key: \stationary_catapult
+               n--
+            for member in Game.player.members
+               Game.send \stay,
+                  target: member.sid
+         , i, j
          await page.waitForTimeout 1000
 
       catch
          setLog i, j, e.message
 
-      loop
-         try
-            await page.reload do
-               waitUntil: \networkidle0
-            break
-         catch
-            setLog i, j, "Reload timeout"
+      unless j == len - 1
+         loop
+            try
+               await page.reload do
+                  waitUntil: \networkidle0
+               break
+            catch
+               setLog i, j, "Reload timeout"
 
    await page.close!
    await browser.close!

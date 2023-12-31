@@ -1,6 +1,6 @@
 require! {
    "puppeteer-core": puppeteer
-   "chalk"
+   chalk
 }
 
 browserNum = 4
@@ -72,8 +72,8 @@ await Promise.all Array.from (Array browserNum), (, i) !~>
          await page.click \.showMainMenu
          await page.click ".modePicker > .ui-tabs > :nth-child(2)"
          await page.waitForFunction ~>
-            document.querySelector \.tribeName .value = "Hanoi2"
-            document.querySelector \.groupName .value = "Hanoi2"
+            document.querySelector \.tribeName .value = "Rezoner"
+            document.querySelector \.groupName .value = "Vietnam"
             CLIENT.Game.server_url = \s14421783116
             yes
          await page.click \.start

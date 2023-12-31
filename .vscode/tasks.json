@@ -4,7 +4,7 @@
       {
          "label": "build",
          "type": "shell",
-         "command": "ls2 ./browser.ls",
+         "command": "ls2 ./base.ls",
          "presentation": {
             "clear": true,
             "showReuseMessage": false,

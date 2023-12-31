@@ -67,11 +67,12 @@ await Promise.all Array.from (Array 4), (, i) !~>
       try
          await page.click ".showMainMenu"
          await page.click ".modePicker > .ui-tabs > :nth-child(2)"
-         name = names[Math.floor Math.random! * names.length]
+         # name = names[Math.floor Math.random! * names.length]
+         name = "FARMER"
          await page.waitForFunction (name) ~>
             document.querySelector \.tribeName .value = name
-            document.querySelector \.groupName .value = ""
-            CLIENT.Game.server_url = \s14523994187
+            document.querySelector \.groupName .value = "Vietnam"
+            CLIENT.Game.server_url = \s14421783116
             yes
          ,, name
          await page.click ".start"
@@ -131,20 +132,21 @@ await Promise.all Array.from (Array 4), (, i) !~>
             Game.camera.setFollow Game.player
             Game.music.channel.volume 0
 
-            king = Game.entities.groups.tribes.find (.shared.name == \Cocodril)
-            if king and king.team != Game.player.team
-               for key in [\wood \food \gold]
-                 for i til 8
-                   Game.send \drop,
-                     key: key
-               for member in Game.player.members
-                  Game.send \stay,
-                     target: member.sid
-               return
+            king = Game.entities.groups.tribes.find (.shared.name == \Pepyakis)
+            # if king and king.team != Game.player.team
+            #    for key in [\wood \food \gold]
+            #      for i til 8
+            #        Game.send \drop,
+            #          key: key
+            #    for member in Game.player.members
+            #       Game.send \stay,
+            #          target: member.sid
+            #    return
 
             # await moveRandom!
 
-            if king and king.team == Game.player.team
+            # if king and king.team == Game.player.team
+            if king
                x = king.x + Utils.random -200 200
                y = king.y + Utils.random -200 200
             # else
@@ -162,7 +164,7 @@ await Promise.all Array.from (Array 4), (, i) !~>
             # y = 1000 + Utils.random -200 200
 
             await moveToXY x, y
-            storageBuildName = Utils.random 0 2 and \wood_storage or \food_storage
+            storageBuildName = Utils.random 0 1 and \wood_storage or \food_storage
             Game.send \buildAnywhere,
                x: Game.player.x
                y: Game.player.y
@@ -187,9 +189,10 @@ await Promise.all Array.from (Array 4), (, i) !~>
             for i til 2
                Game.send \drop,
                   key: \gold
-            for member in Game.player.members
-               Game.send \stay,
-                  target: member.sid
+            await moveToXY 1120 675
+            # for member in Game.player.members
+            #    Game.send \stay,
+            #       target: member.sid
             # Game.send \quick_chat,
             #   text: "join the FARMER team"
          await page.waitForTimeout 1000
